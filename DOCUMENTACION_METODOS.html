@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DOCUMENTACION_METODOS</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1
+id="documentación-de-métodos-simulador-de-gestor-de-procesos">Documentación
+de Métodos — Simulador de Gestor de Procesos</h1>
+<p>Este documento enumera y explica cada método público y privado
+relevante del proyecto, indicando firma, parámetros, valor devuelto,
+efectos secundarios y excepciones.</p>
+<hr />
+<h2 id="srccoreprocess.py"><code>src/core/process.py</code></h2>
+<h3
+id="pcb.__post_init__self---none"><code>PCB.__post_init__(self) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>def __post_init__(self) -&gt; None</code></li>
+<li>Parámetros: <code>self</code> (instancia de <code>PCB</code>).</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos secundarios:
+<ul>
+<li>Asigna <code>self.pid</code> usando el contador estático
+<code>PCB._next_pid</code>.</li>
+<li>Incrementa <code>PCB._next_pid</code>.</li>
+<li>Genera valores aleatorios para <code>cpu_burst</code>,
+<code>mem_mb</code> y <code>arrival_time</code> si vienen con
+<code>-1</code>.</li>
+<li>Inicializa <code>self.time_remaining = self.cpu_burst</code>.</li>
+</ul></li>
+<li>Excepciones: <code>ValueError</code> si
+<code>cpu_burst &lt; 1</code>, <code>mem_mb &lt; 1</code> o
+<code>arrival_time &lt; 0</code>.</li>
+<li>Uso: llamado automáticamente al crear el dataclass
+<code>PCB</code>.</li>
+</ul>
+<h3
+id="pcb.transitionself-new_state-processstate---none"><code>PCB.transition(self, new_state: ProcessState) -&gt; None</code></h3>
+<ul>
+<li>Firma:
+<code>def transition(self, new_state: ProcessState) -&gt; None</code></li>
+<li>Parámetros: <code>new_state</code> — valor de
+<code>ProcessState</code> al que se quiere cambiar.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos secundarios: actualiza <code>self.state</code> si la
+transición es válida.</li>
+<li>Excepciones: <code>ValueError</code> si la transición no está
+permitida por <code>VALID_TRANSITIONS</code>.</li>
+<li>Notas: Mantiene la integridad del ciclo de vida del proceso.</li>
+</ul>
+<h3
+id="pcb.__str__self---str"><code>PCB.__str__(self) -&gt; str</code></h3>
+<ul>
+<li>Firma: <code>def __str__(self) -&gt; str</code></li>
+<li>Parámetros: ninguno adicional.</li>
+<li>Retorno: representación textual completa del PCB.</li>
+<li>Efectos secundarios: ninguno.</li>
+<li>Uso: logging y visualización en UI.</li>
+</ul>
+<h3
+id="pcb.reset_pid_countercls---none-classmethod"><code>PCB.reset_pid_counter(cls) -&gt; None</code>
+(classmethod)</h3>
+<ul>
+<li>Firma:
+<code>@classmethod def reset_pid_counter(cls) -&gt; None</code></li>
+<li>Parámetros: <code>cls</code>.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos secundarios: establece <code>PCB._next_pid = 1</code>.</li>
+<li>Uso: reiniciar la numeración entre ejecuciones.</li>
+</ul>
+<hr />
+<h2 id="srccoreresource.py"><code>src/core/resource.py</code></h2>
+<h3
+id="resourcepool.__init__self-cpu_cores-int-1-ram_mb-int-4096---none"><code>ResourcePool.__init__(self, cpu_cores: int = 1, ram_mb: int = 4096) -&gt; None</code></h3>
+<ul>
+<li>Firma y parámetros: <code>cpu_cores</code> y
+<code>ram_mb</code>.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos: inicializa <code>total_cpu</code>, <code>total_ram</code>,
+<code>available_cpu</code> y <code>available_ram</code>.</li>
+<li>Excepciones: <code>ValueError</code> si alguno de los parámetros
+&lt; 1.</li>
+</ul>
+<h3
+id="resourcepool.requestself-cpu-int-ram-int---bool"><code>ResourcePool.request(self, cpu: int, ram: int) -&gt; bool</code></h3>
+<ul>
+<li>Firma: <code>request(cpu, ram) -&gt; bool</code>.</li>
+<li>Parámetros: <code>cpu</code> (núcleos a reservar), <code>ram</code>
+(MB a reservar).</li>
+<li>Retorno: <code>True</code> si la reserva se puede efectuar;
+<code>False</code> si no hay recursos disponibles o la petición excede
+totales.</li>
+<li>Efectos secundarios: decrementa <code>available_cpu</code> y
+<code>available_ram</code> en caso de éxito.</li>
+<li>Excepciones: <code>ValueError</code> si <code>cpu</code> o
+<code>ram</code> son negativos.</li>
+<li>Uso: llamado por <code>Scheduler.admit_process</code> y antes de
+dispatch de CPU para asegurar disponibilidad.</li>
+</ul>
+<h3
+id="resourcepool.releaseself-cpu-int-ram-int---bool"><code>ResourcePool.release(self, cpu: int, ram: int) -&gt; bool</code></h3>
+<ul>
+<li>Firma: <code>release(cpu, ram) -&gt; bool</code>.</li>
+<li>Parámetros: <code>cpu</code>, <code>ram</code>.</li>
+<li>Retorno: <code>True</code> si la liberación fue válida;
+<code>False</code> si causaría sobrepaso del total (double-free).</li>
+<li>Efectos secundarios: incrementa
+<code>available_cpu</code>/<code>available_ram</code>.</li>
+<li>Excepciones: <code>ValueError</code> si argumentos negativos.</li>
+<li>Uso: liberar CPU al pasar a WAITING y liberar CPU+RAM al terminar un
+proceso.</li>
+</ul>
+<hr />
+<h2 id="srccorescheduler.py"><code>src/core/scheduler.py</code></h2>
+<blockquote>
+<p>Notas: los métodos que empiezan con <code>_</code> son internos,
+empero están documentados porque definen la lógica del planificador.</p>
+</blockquote>
+<h3
+id="scheduler.register_processself-pcb-pcb---none"><code>Scheduler.register_process(self, pcb: PCB) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>register_process(pcb)</code>.</li>
+<li>Parámetros: <code>pcb</code> — instancia <code>PCB</code> en estado
+<code>NEW</code>.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos: añade <code>pcb</code> a <code>self.all_processes</code> y
+llama a <code>logger.log(...)</code> con la información de
+registro.</li>
+<li>Excepciones: ninguna explícita; espera un objeto <code>PCB</code>
+válido.</li>
+</ul>
+<h3
+id="scheduler.admit_processself-pcb-pcb---bool"><code>Scheduler.admit_process(self, pcb: PCB) -&gt; bool</code></h3>
+<ul>
+<li>Firma: <code>admit_process(pcb) -&gt; bool</code>.</li>
+<li>Parámetros: <code>pcb</code> (debe estar en <code>NEW</code>).</li>
+<li>Retorno: <code>True</code> si la admisión (reserva RAM + cambio a
+READY) fue exitosa; <code>False</code> en caso contrario.</li>
+<li>Efectos:
+<ul>
+<li>Pide RAM con
+<code>resources.request(cpu=0, ram=pcb.mem_mb)</code>.</li>
+<li>Si éxito: hace <code>pcb.transition(ProcessState.READY)</code> y
+<code>self.ready_queue.append(pcb)</code>.</li>
+<li>Registra evento en <code>logger</code>.</li>
+</ul></li>
+<li>Excepciones: no lanza, devuelve <code>False</code> y registra en
+logger si el estado es incorrecto o falta RAM.</li>
+</ul>
+<h3
+id="scheduler._handle_arrivalsself---none"><code>Scheduler._handle_arrivals(self) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>_handle_arrivals()</code>.</li>
+<li>Parámetros: ninguno.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos: busca procesos <code>NEW</code> con
+<code>arrival_time &lt;= self.clock</code>, ordena por
+<code>arrival_time</code> y los admite llamando a
+<code>admit_process</code>.</li>
+<li>Uso: llamado cada tick desde <code>execute_cycle</code>.</li>
+</ul>
+<h3
+id="scheduler._handle_waitingself---none"><code>Scheduler._handle_waiting(self) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>_handle_waiting()</code>.</li>
+<li>Parámetros: ninguno.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos:
+<ul>
+<li>Decrementa <code>pcb.io_wait_time</code> para cada proceso en
+<code>waiting_queue</code>.</li>
+<li>Cuando <code>io_wait_time &lt;= 0</code>, mueve el proceso a
+<code>READY</code> mediante
+<code>pcb.transition(ProcessState.READY)</code> y
+<code>self.ready_queue.append(pcb)</code>.</li>
+<li>Loggea la finalización de I/O.</li>
+</ul></li>
+</ul>
+<h3
+id="scheduler._select_nextself---pcb-none"><code>Scheduler._select_next(self) -&gt; PCB | None</code></h3>
+<ul>
+<li>Firma: <code>_select_next() -&gt; PCB | None</code>.</li>
+<li>Retorno: siguiente <code>PCB</code> a ejecutar o <code>None</code>
+si la cola está vacía.</li>
+<li>Lógica:
+<ul>
+<li><code>FCFS</code>:
+<code>return self.ready_queue.popleft()</code>.</li>
+<li><code>SJF</code>: busca el <code>PCB</code> con menor
+<code>time_remaining</code> en la <code>ready_queue</code>, lo remueve y
+lo retorna.</li>
+</ul></li>
+<li>Efectos: modifica <code>ready_queue</code>.</li>
+</ul>
+<h3
+id="scheduler._execute_tickself-pcb-pcb---bool"><code>Scheduler._execute_tick(self, pcb: PCB) -&gt; bool</code></h3>
+<ul>
+<li>Firma: <code>_execute_tick(pcb) -&gt; bool</code>.</li>
+<li>Parámetros: <code>pcb</code> — proceso que está en CPU.</li>
+<li>Retorno: <code>True</code> si el proceso solicitó I/O y fue movido a
+<code>WAITING</code>; <code>False</code> en caso contrario.</li>
+<li>Efectos:
+<ul>
+<li><code>pcb.time_remaining -= 1</code>.</li>
+<li>Loggea el tick.</li>
+<li>Con probabilidad <code>IO_PROBABILITY</code> (si
+<code>pcb.time_remaining &gt; 0</code>) genera
+<code>io_ticks = random.randint(IO_WAIT_MIN, IO_WAIT_MAX)</code>.
+<ul>
+<li>Asigna <code>pcb.io_wait_time = io_ticks</code>.</li>
+<li><code>pcb.transition(ProcessState.WAITING)</code>.</li>
+<li><code>self.resources.release(cpu=1, ram=0)</code> — libera la CPU
+pero mantiene la RAM asignada.</li>
+<li><code>self.waiting_queue.append(pcb)</code> y
+<code>self.current_process = None</code>.</li>
+</ul></li>
+<li>No hay excepción explícita; asume <code>pcb</code> válido y
+<code>self.resources</code> capaz de release.</li>
+</ul></li>
+</ul>
+<h3
+id="scheduler.execute_cycleself---str"><code>Scheduler.execute_cycle(self) -&gt; str</code></h3>
+<ul>
+<li>Firma: <code>execute_cycle() -&gt; str</code>.</li>
+<li>Parámetros: ninguno.</li>
+<li>Retorno: mensaje de estado legible (por ejemplo, “[Tick X] PID Y
+TERMINADO.” o información de CPU ociosa).</li>
+<li>Efectos (secuencia principal):
+<ol type="1">
+<li><code>self.clock += 1</code>.</li>
+<li><code>_handle_arrivals()</code> y
+<code>_handle_waiting()</code>.</li>
+<li>Si <code>self.current_process is None</code>:
+<ul>
+<li><code>next_pcb = self._select_next()</code>.</li>
+<li>Si <code>next_pcb is None</code>: loggea “IDLE” y retorna.</li>
+<li>Intenta <code>self.resources.request(cpu=1, ram=0)</code>; si falla,
+reencola <code>next_pcb</code> y retorna.</li>
+<li><code>next_pcb.transition(ProcessState.RUNNING)</code> y
+<code>self.current_process = next_pcb</code>.</li>
+</ul></li>
+<li>Llama <code>_execute_tick(self.current_process)</code>.</li>
+<li>Si <code>_execute_tick</code> devuelve <code>True</code>, retorna
+mensaje indicando I/O.</li>
+<li>Si <code>self.current_process.time_remaining &lt;= 0</code>:
+transita a <code>TERMINATED</code>,
+<code>exit_reason = ExitReason.NORMAL</code>,
+<code>self.resources.release(cpu=1, ram=finished.mem_mb)</code>, loggea,
+limpia <code>current_process</code>.</li>
+</ol></li>
+<li>Excepciones: no lanza; todas las fallas se registran y la función
+devuelve mensajes.</li>
+</ul>
+<h3
+id="scheduler.is_simulation_completeself---bool"><code>Scheduler.is_simulation_complete(self) -&gt; bool</code></h3>
+<ul>
+<li>Firma: <code>is_simulation_complete() -&gt; bool</code>.</li>
+<li>Retorno: <code>True</code> si <code>self.all_processes</code> está
+vacío o todos los procesos están en <code>TERMINATED</code>.</li>
+<li>Uso: para detectar finalización desde la GUI.</li>
+</ul>
+<h3
+id="scheduler.set_algorithmself-algorithm-schedulingalgorithm---none"><code>Scheduler.set_algorithm(self, algorithm: SchedulingAlgorithm) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>set_algorithm(algorithm)</code>.</li>
+<li>Parámetros: <code>algorithm</code> enum.</li>
+<li>Efectos: actualiza <code>self.algorithm</code> y loggea el
+cambio.</li>
+</ul>
+<hr />
+<h2
+id="srcipcproducer_consumer.py"><code>src/ipc/producer_consumer.py</code></h2>
+<h3 id="run_demo---none"><code>run_demo() -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>def run_demo() -&gt; None</code>.</li>
+<li>Parámetros: ninguno.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos:
+<ul>
+<li>Crea <code>buffer</code>, <code>mutex</code> (Lock), semáforos
+<code>empty</code>/<code>full</code> y contadores compartidos.</li>
+<li>Define <code>producer</code> y <code>consumer</code> internos que
+producen/consumen un número fijo de items y los imprimen.</li>
+<li>Lanza 2 hilos productores y 2 consumidores, hace
+<code>start()</code> y <code>join(timeout=30)</code>.</li>
+</ul></li>
+<li>Excepciones: la función atrapa excepciones internas solo en la
+integración con GUI; en modo directo imprime trazas.</li>
+</ul>
+<hr />
+<h2 id="srcuilogger.py"><code>src/ui/logger.py</code></h2>
+<h3
+id="logger.logself-message-str-tick-int-0---none"><code>Logger.log(self, message: str, tick: int = 0) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>log(message, tick=0)</code>.</li>
+<li>Parámetros: <code>message</code> y <code>tick</code>.</li>
+<li>Retorno: <code>None</code>.</li>
+<li>Efectos: crea <code>LogEntry</code> con
+<code>timestamp=time.time()</code> y lo añade a
+<code>self.entries</code>; si <code>self.verbose</code> imprime la
+entrada en consola.</li>
+</ul>
+<h3
+id="logger.show_historyself-last_n-int-0---none"><code>Logger.show_history(self, last_n: int = 0) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>show_history(last_n=0)</code>.</li>
+<li>Parámetros: <code>last_n</code> — si &gt; 0 filtra últimas N
+entradas.</li>
+<li>Efectos: imprime el historial formateado en consola.</li>
+</ul>
+<h3
+id="logger.clearself---none"><code>Logger.clear(self) -&gt; None</code></h3>
+<ul>
+<li>Efectos: elimina todas las entradas de
+<code>self.entries</code>.</li>
+</ul>
+<hr />
+<h2 id="main.py-métodos-de-simulatorgui"><code>main.py</code> — métodos
+de <code>SimulatorGUI</code></h2>
+<blockquote>
+<p>Nota: muchos métodos de GUI son handlers; se describen aquí con su
+efecto en la simulación.</p>
+</blockquote>
+<h3
+id="simulatorgui.on_start_simulationself---none"><code>SimulatorGUI.on_start_simulation(self) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>on_start_simulation()</code>.</li>
+<li>Efectos principales:
+<ul>
+<li>Si <code>self._simulation_running</code> (ya corriendo): pausa la
+simulación cancelando <code>root.after</code> y actualiza
+textos/estados.</li>
+<li>Si no hay procesos en <code>scheduler.all_processes</code>, lee
+<code>num_processes</code> de <code>entry_num_processes</code>, valida
+rango, configura algoritmo con <code>scheduler.set_algorithm(...)</code>
+y crea <code>PCB</code> en <code>NEW</code> llamando
+<code>scheduler.register_process(pcb)</code>.</li>
+<li>Bloquea inputs (entry/combo) y cambia botones a estado
+“Pausar”.</li>
+<li>Establece <code>self._simulation_running = True</code> y programa
+<code>self._after_id = self.root.after(self.speed_var.get(), self._auto_tick)</code>.</li>
+</ul></li>
+<li>Excepciones: muestra <code>messagebox.showerror</code> si el input
+no es válido.</li>
+</ul>
+<h3
+id="simulatorgui._auto_tickself---none"><code>SimulatorGUI._auto_tick(self) -&gt; None</code></h3>
+<ul>
+<li>Firma: <code>_auto_tick()</code>.</li>
+<li>Efectos:
+<ul>
+<li>Si no <code>self._simulation_running</code> retorna.</li>
+<li>Llama <code>self.scheduler.execute_cycle()</code> y
+<code>self.update_ui()</code>.</li>
+<li>Si <code>scheduler.is_simulation_complete()</code> pone la interfaz
+en estado completado y muestra <code>messagebox.showinfo</code> con
+resumen.</li>
+<li>Si no completado reprograma
+<code>root.after(self.speed_var.get(), self._auto_tick)</code>.</li>
+</ul></li>
+</ul>
+<h3
+id="simulatorgui.on_reset_simulationself---none"><code>SimulatorGUI.on_reset_simulation(self) -&gt; None</code></h3>
+<ul>
+<li>Efectos:
+<ul>
+<li>Cancela <code>root.after</code> si existe.</li>
+<li>Llama <code>PCB.reset_pid_counter()</code>.</li>
+<li>Reinstancia <code>Logger</code>, <code>ResourcePool</code> y
+<code>Scheduler</code>.</li>
+<li>Restaura estados de botones y entradas.</li>
+</ul></li>
+</ul>
+<h3
+id="simulatorgui.on_view_logsself---none"><code>SimulatorGUI.on_view_logs(self) -&gt; None</code></h3>
+<ul>
+<li>Efectos: abre <code>Toplevel</code>, crea un <code>Text</code>,
+inserta todas las <code>logger.entries</code> y lo marca como
+<code>state=DISABLED</code>.</li>
+</ul>
+<h3
+id="simulatorgui.on_run_ipcself---none"><code>SimulatorGUI.on_run_ipc(self) -&gt; None</code></h3>
+<ul>
+<li>Efectos:
+<ul>
+<li>Crea <code>Toplevel</code> con <code>Text</code> y una
+<code>queue.Queue</code> de mensajes.</li>
+<li>Define <code>RedirectText</code> que implementa <code>write()</code>
+para poner strings en la queue.</li>
+<li><code>poll_queue()</code> lee la queue y actualiza el
+<code>Text</code> periódicamente con
+<code>top.after(50, poll_queue)</code>.</li>
+<li><code>run_demo_thread()</code> redirige temporalmente
+<code>sys.stdout</code> a <code>RedirectText</code> y llama
+<code>ipc_demo()</code>.</li>
+<li>Lanza
+<code>threading.Thread(target=run_demo_thread, daemon=True).start()</code>.</li>
+</ul></li>
+<li>Notas: patrón seguro para integrar salida de hilos en la GUI.</li>
+</ul>
+<h3
+id="simulatorgui.update_uiself---none"><code>SimulatorGUI.update_ui(self) -&gt; None</code></h3>
+<ul>
+<li>Efectos:
+<ul>
+<li>Actualiza <code>lbl_clock</code> con
+<code>scheduler.clock</code>.</li>
+<li>Muestra recursos con
+<code>scheduler.resources.available_*</code>.</li>
+<li>Calcula contadores por estado (<code>NEW</code>, <code>READY</code>,
+<code>WAITING</code>, <code>TERMINATED</code>).</li>
+<li>Rellena <code>listbox_ready</code>, <code>listbox_waiting</code>,
+<code>listbox_terminated</code> con representaciones de
+<code>PCB</code>.</li>
+<li>Actualiza progreso y barras.</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="ejemplos-de-uso-rápido-línea-de-comandos">Ejemplos de uso rápido
+(línea de comandos)</h2>
+<ul>
+<li>Registrar procesos y ejecutar un ciclo manualmente:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.core.process <span class="im">import</span> PCB</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.core.resource <span class="im">import</span> ResourcePool</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.ui.logger <span class="im">import</span> Logger</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.core.scheduler <span class="im">import</span> Scheduler, SchedulingAlgorithm</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> ResourcePool(<span class="dv">1</span>, <span class="dv">4096</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>log <span class="op">=</span> Logger(verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> Scheduler(resources<span class="op">=</span>res, logger<span class="op">=</span>log, algorithm<span class="op">=</span>SchedulingAlgorithm.FCFS)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> PCB(name<span class="op">=</span><span class="st">&#39;Prueba&#39;</span>, cpu_burst<span class="op">=</span><span class="dv">5</span>, mem_mb<span class="op">=</span><span class="dv">128</span>, arrival_time<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>s.register_process(p)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular varios ticks</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s.execute_cycle())</span></code></pre></div>
+<hr />
+<p>Archivo generado automáticamente por el asistente.</p>
+</body>
+</html>
