@@ -14,7 +14,6 @@ BUFFER_SIZE: int = 3
 ITEMS_PER_PRODUCER: int = 4
 
 def run_demo() -> None:
-    """Ejecuta la demo con 2 productores y 2 consumidores."""
     print("\n" + "=" * 65)
     print("    DEMO IPC: PROBLEMA PRODUCTOR-CONSUMIDOR")
     print("    (2 Productores, 2 Consumidores, Buffer de 3)")
@@ -33,7 +32,6 @@ def run_demo() -> None:
     total_items: int = 2 * ITEMS_PER_PRODUCER
 
     def producer(producer_id: int) -> None:
-        """Genera datos y los inserta en el buffer de manera segura."""
         for i in range(ITEMS_PER_PRODUCER):
             # Simula tiempo de procesamiento de generación
             item: str = f"Item-P{producer_id}-{i}"
@@ -62,7 +60,6 @@ def run_demo() -> None:
             full.release()
 
     def consumer(consumer_id: int) -> None:
-        """Retira datos del buffer simulando carga de trabajo."""
         while True:
             # Condición de salida si ya se procesó el lote total
             with count_lock:

@@ -137,12 +137,6 @@ class PCB:
         self.time_remaining = self.cpu_burst
 
     def transition(self, new_state: ProcessState) -> None:
-        """Cambia el estado del proceso validando las transiciones legales.
-
-        El cambio de estado no es libre. Se consulta la FSM definida en
-        `VALID_TRANSITIONS` y solo se permite avanzar si la transición está
-        contemplada para el estado actual.
-        """
         allowed: frozenset[ProcessState] = VALID_TRANSITIONS.get(self.state, frozenset())
 
         # Si el estado destino no está permitido, la transición se rechaza.
@@ -157,14 +151,6 @@ class PCB:
         self.state = new_state
 
     def __str__(self) -> str:
-        """Devuelve una representación legible del PCB para consola o logs.
-
-        La salida se construye de forma compacta para que sea fácil de leer
-        durante la simulación, pero agrega información extra cuando tiene sentido:
-        - razón de salida, si el proceso ya terminó,
-        - y tiempo de espera de E/S, si el proceso está bloqueado.
-        """
-
         # Se muestran solo los datos opcionales que realmente aplican al estado actual.
         exit_info: str = f" | Razón: {self.exit_reason.name}" if self.exit_reason else ""
         io_info: str = f" | I/O: {self.io_wait_time} ticks" if self.state == ProcessState.WAITING and self.io_wait_time > 0 else ""
@@ -179,11 +165,6 @@ class PCB:
 
     @classmethod
     def reset_pid_counter(cls) -> None:
-        """Reinicia el contador de PIDs para comenzar una simulación nueva.
-
-        Esto es útil en pruebas, demostraciones o cargas batch repetidas,
-        porque hace que la numeración de procesos vuelva a empezar desde 1.
-        """
         cls._next_pid = 1
 
 #contador de la clase para autogenerar PIDs

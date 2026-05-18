@@ -49,8 +49,6 @@ class SimulatorGUI:
         self.update_ui()
 
     def _build_ui(self) -> None:
-        """Construye los elementos de la interfaz."""
-        
         # --- Panel de Configuración de Lote ---
         self.frame_config = tk.LabelFrame(
             self.root, text="1. Configuración de la Simulación", padx=10, pady=10
@@ -164,8 +162,6 @@ class SimulatorGUI:
         self.listbox_terminated.config(yscrollcommand=self.scroll_terminated.set)
 
     def on_start_simulation(self) -> None:
-        """Inicia, pausa o reanuda la simulación automática."""
-        
         # Funcionalidad de Pausado Dinámico
         if self._simulation_running:
             self._simulation_running = False
@@ -217,7 +213,6 @@ class SimulatorGUI:
         self._after_id = self.root.after(self.speed_var.get(), self._auto_tick)
 
     def _auto_tick(self) -> None:
-        """Avanza la simulación un tick y programa el siguiente."""
         if not self._simulation_running:
             return
 
@@ -250,7 +245,6 @@ class SimulatorGUI:
         self._after_id = self.root.after(self.speed_var.get(), self._auto_tick)
 
     def on_reset_simulation(self) -> None:
-        """Restablece el estado del kernel y purga elementos de la interfaz."""
         self._simulation_running = False
         if self._after_id is not None:
             self.root.after_cancel(self._after_id)
@@ -278,7 +272,6 @@ class SimulatorGUI:
         self.update_ui()
 
     def on_view_logs(self) -> None:
-        """Renderiza una ventana Toplevel con historial del Kernel."""
         top = tk.Toplevel(self.root)
         top.title("Historial de Logs del Sistema")
         top.geometry("750x450")
@@ -296,7 +289,6 @@ class SimulatorGUI:
         text_area.config(state=tk.DISABLED)
 
     def on_run_ipc(self) -> None:
-        """Inicia una ventana con la ejecución del script Productor-Consumidor multi-hilo."""
         top = tk.Toplevel(self.root)
         top.title("Demo IPC: Productor - Consumidor (Hilos)")
         top.geometry("600x400")
@@ -308,7 +300,6 @@ class SimulatorGUI:
         msg_queue: queue.Queue[str | None] = queue.Queue()
 
         class RedirectText:
-            """Adaptador de stream stdOut hacia una Queue thread-safe."""
             def __init__(self, q: queue.Queue) -> None:
                 self.q = q
             def write(self, string: str) -> None:
@@ -317,7 +308,6 @@ class SimulatorGUI:
                 pass
 
         def poll_queue() -> None:
-            """Desencola los logs escritos y renderiza el texto en GUI."""
             while not msg_queue.empty():
                 try:
                     msg = msg_queue.get_nowait()
@@ -332,7 +322,6 @@ class SimulatorGUI:
                 top.after(50, poll_queue)
 
         def run_demo_thread() -> None:
-            """Hilo Wrapper para llamar a IPC sin congelar interfaz principal."""
             old_stdout = sys.stdout
             sys.stdout = RedirectText(msg_queue)
             try:
@@ -348,7 +337,6 @@ class SimulatorGUI:
         threading.Thread(target=run_demo_thread, daemon=True).start()
 
     def update_ui(self) -> None:
-        """Actualiza asincronamente los componentes visuales iterando sobre las estructuras del OS."""
         self.lbl_clock.config(text=f"Reloj: {self.scheduler.clock}")
 
         # Render métricas de Hardware

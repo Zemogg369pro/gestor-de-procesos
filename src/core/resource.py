@@ -34,11 +34,6 @@ class ResourcePool:
         self.available_ram: int = ram_mb
 
     def request(self, cpu: int, ram: int) -> bool:
-        """Intenta asignar recursos a un proceso.
-
-        Devuelve `True` solo si la petición es válida y existe disponibilidad
-        suficiente. En caso contrario, devuelve `False` sin modificar el pool.
-        """
 
         # No se aceptan valores negativos porque romperían el balance del pool.
         if cpu < 0 or ram < 0:
@@ -58,13 +53,6 @@ class ResourcePool:
         return True
 
     def release(self, cpu: int, ram: int) -> bool:
-        """Devuelve recursos al pool.
-
-        Se usa cuando un proceso termina o cuando libera CPU temporalmente
-        por una solicitud de E/S. La función protege contra liberaciones que
-        excederían el total instalado, lo que ayudaría a detectar errores de
-        sincronización o dobles liberaciones.
-        """
 
         # La liberación también debe ser coherente: no se admiten negativos.
         if cpu < 0 or ram < 0:
@@ -82,7 +70,6 @@ class ResourcePool:
         return True
 
     def __str__(self) -> str:
-        """Devuelve un resumen visual del estado actual del pool de recursos."""
 
         # Se calcula el uso actual para mostrarlo de forma amigable en consola.
         cpu_used: int = self.total_cpu - self.available_cpu

@@ -28,7 +28,6 @@ class Logger:
         self.verbose: bool = verbose
 
     def log(self, message: str, tick: int = 0) -> None:
-        """Registra y opcionalmente imprime un evento."""
         entry = LogEntry(
             tick=tick,
             timestamp=time.time(),
@@ -41,7 +40,6 @@ class Logger:
             print(f"  {entry}")
 
     def show_history(self, last_n: int = 0) -> None:
-        """Muestra el historial guardado en consola."""
         print("\n" + "=" * 65)
         print("              HISTORIAL DEL LOG DEL SISTEMA")
         print("=" * 65)
@@ -58,5 +56,4 @@ class Logger:
         print("=" * 65)
 
     def clear(self) -> None:
-        """Borra todos los registros."""
         self.entries.clear()

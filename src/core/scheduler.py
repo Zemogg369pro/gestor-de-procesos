@@ -63,12 +63,6 @@ class Scheduler:
         self.logger: Logger = logger
 
     def register_process(self, pcb: PCB) -> None:
-        """Añade un proceso en estado NEW a la lista general del sistema.
-
-        Registrar no significa admitir todavía. Solo guarda el proceso en el
-        inventario global para que luego pueda entrar al sistema cuando su
-        `arrival_time` lo permita.
-        """
         self.all_processes.append(pcb)
         self.logger.log(
             f"REGISTRADO: PID {pcb.pid} ({pcb.name}) | "
@@ -78,11 +72,6 @@ class Scheduler:
         )
 
     def admit_process(self, pcb: PCB) -> bool:
-        """Transfiere un proceso de NEW a READY si hay RAM suficiente.
-
-        La admisión reserva memoria para garantizar que el proceso pueda ser
-        ejecutado sin exceder la capacidad del sistema.
-        """
 
         # Un proceso solo puede ser admitido si todavía no ha cambiado de estado.
         if pcb.state != ProcessState.NEW:
@@ -110,7 +99,6 @@ class Scheduler:
         return True
 
     def _handle_arrivals(self) -> None:
-        """Admite procesos cuyo `arrival_time` ya alcanzó el reloj actual."""
 
         # Se seleccionan los procesos que ya llegaron y siguen esperando ser admitidos.
         pending = [
@@ -123,11 +111,6 @@ class Scheduler:
             self.admit_process(pcb)
 
     def _handle_waiting(self) -> None:
-        """Decrementa el tiempo de espera de I/O y reactiva procesos cuando termina.
-
-        Cada tick reduce el contador de espera. Cuando llega a cero, el proceso
-        abandona WAITING y vuelve a READY para competir nuevamente por CPU.
-        """
         completed_io = []
         for pcb in self.waiting_queue:
             pcb.io_wait_time -= 1
@@ -142,11 +125,6 @@ class Scheduler:
             self.logger.log(f"I/O COMPLETO: PID {pcb.pid} ({pcb.name}) -> READY", self.clock)
 
     def _select_next(self) -> PCB | None:
-        """Selecciona el siguiente proceso de la cola de listos según el algoritmo.
-
-        FCFS toma el primero en entrar.
-        SJF elige el proceso con menor tiempo restante de CPU.
-        """
         if not self.ready_queue:
             return None
 
@@ -163,10 +141,6 @@ class Scheduler:
         return self.ready_queue.popleft()
 
     def _execute_tick(self, pcb: PCB) -> bool:
-        """
-        Avanza la ejecución del proceso actual en un tick.
-        Simula solicitudes aleatorias de I/O (paso a WAITING).
-        """
         # Un tick de CPU consume una unidad del tiempo restante del proceso.
         pcb.time_remaining -= 1
         self.logger.log(
@@ -194,12 +168,6 @@ class Scheduler:
         return False
 
     def execute_cycle(self) -> str:
-        """Ejecuta un ciclo completo del planificador.
-
-        Un ciclo equivale a un tick de simulación. En cada tick se procesan
-        llegadas, se avanza la espera por I/O y, si la CPU está libre, se
-        selecciona un nuevo proceso para ejecutarse.
-        """
 
         # El reloj avanza primero para que todos los eventos se evalúen en el nuevo tick.
         self.clock += 1
@@ -251,20 +219,11 @@ class Scheduler:
         return f"[Tick {self.clock}] PID {self.current_process.pid} ejecutando."
 
     def is_simulation_complete(self) -> bool:
-        """Retorna `True` si todos los procesos han terminado.
-
-        Se usa como condición de parada principal del simulador.
-        """
         if not self.all_processes:
             return True
         # La simulación termina cuando todos los procesos alcanzaron el estado final.
         return all(p.state == ProcessState.TERMINATED for p in self.all_processes)
 
     def set_algorithm(self, algorithm: SchedulingAlgorithm) -> None:
-        """Cambia el algoritmo de planificación en uso.
-
-        Esto permite alternar la política de despacho sin reconstruir todo el
-        simulador, útil para comparar FCFS contra SJF en la misma ejecución.
-        """
         self.algorithm = algorithm
         self.logger.log(f"ALGORITMO: {algorithm.name}", self.clock)
